@@ -1,19 +1,3 @@
-// import { initializeApp } from "firebase/app";
-// import { getAuth } from "firebase/auth";
-// import { getFirestore } from "firebase/firestore";
-
-// const firebaseConfig = {
-//  apiKey: "AIzaSyAh78xilEnzgX8CC-n0OVDVctAUeVbCAsY",
-//   authDomain: "ai-civic-sentinel.firebaseapp.com",
-//   projectId: "ai-civic-sentinel",
-//   storageBucket: "ai-civic-sentinel.firebasestorage.app",
-//   messagingSenderId: "514763383948",
-//   appId: "1:514763383948:web:a8aa5577fa3a0f78d5c7a9"
-// };
-
-// const app = initializeApp(firebaseConfig);
-// export const auth = getAuth(app);
-// export const db = getFirestore(app);
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
