@@ -5,53 +5,89 @@ import LocationSection from "@/components/LocationSection";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen">
+    <main className="relative min-h-screen overflow-hidden">
+      {/* Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/home.png')" }}
       />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-200/90 via-blue-200/40 to-transparent" />
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-100/90 via-white/80 to-white" />
 
-      <div className="relative z-10 px-10 py-10">
-        <section className="grid md:grid-cols-2 gap-10 items-center">
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
+        {/* HERO */}
+        <section className="grid md:grid-cols-2 gap-16 items-center">
+          {/* LEFT */}
           <div>
-            <h2 className="text-4xl text-blue-500 font-bold mb-4">
-              AI-Powered <br /> Civic Issue Reporting
-            </h2>
-            <p className="text-blue-800 mb-6 font-bold">Upload a photo, let AI handle the rest.</p>
-            <Link href="/reports" className="bg-blue-600 text-white px-6 py-3 rounded-xl">
-              Reported Issues
-            </Link>
+            <span className="inline-block mb-4 px-4 py-1 text-sm font-semibold text-blue-700 bg-blue-100 rounded-full">
+              AI Civic Sentinel
+            </span>
+
+            <h1 className="text-5xl leading-tight font-extrabold text-blue-700 mb-6">
+              Report Civic Issues <br /> with AI Precision
+            </h1>
+
+            <p className="text-lg text-gray-700 mb-8 max-w-md">
+              Upload a photo of civic issues like potholes, garbage or broken roads.
+              Our AI automatically analyzes, categorizes and tracks them.
+            </p>
+
+            <div className="flex gap-4">
+              <Link
+                href="/dashboard"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg transition"
+              >
+                Get Started
+              </Link>
+
+              <Link
+                href="/reports"
+                className="border border-blue-600 text-blue-600 px-8 py-3 rounded-xl font-semibold hover:bg-blue-50 transition"
+              >
+                View Reports
+              </Link>
+            </div>
           </div>
 
-          <div className="flex items-center justify-center">
-            <div>
+          {/* RIGHT */}
+          <div className="relative">
+            <div className="backdrop-blur-xl bg-white/70 rounded-3xl shadow-2xl p-6">
+              <UploadBox />
+            </div>
+
+            <div className="mt-4 flex justify-center">
               <LocationSection />
             </div>
-
-            <div className="w-full max-w-lg">
-              <UploadBox />
-              <div className="text-center mt-4">
-                <Link href="/dashboard" className="text-sm text-gray-600 hover:underline">
-                  Continue to AI Civic Sentinel →
-                </Link>
-              </div>
-            </div>
           </div>
         </section>
 
-        <section className="mt-10">
-          <h3 className="text-4xl font-bold text-blue-600 mb-8">Steps to Report</h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            <FeatureCard title="1. Snap & Upload" desc="Take a photo of the issue" />
-            <FeatureCard title="2. AI Analysis" desc="Google Gemini detects problem" />
-            <FeatureCard title="3. Track Status" desc="Live updates in real-time" />
+        {/* STEPS */}
+        <section className="mt-24">
+          <h2 className="text-4xl font-bold text-center text-blue-700 mb-12">
+            How It Works
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <FeatureCard
+              title="1. Capture & Upload"
+              desc="Click a photo of the civic issue using your phone"
+            />
+            <FeatureCard
+              title="2. AI Analysis"
+              desc="AI detects problem type, severity & location"
+            />
+            <FeatureCard
+              title="3. Track Resolution"
+              desc="Monitor real-time status & authority updates"
+            />
           </div>
         </section>
 
-        <div className="w-full text-center font-bold mt-10 mb-10">
-          <p className="text-sm text-gray-600">From photo to resolution - powered by AI</p>
+        {/* FOOTER LINE */}
+        <div className="text-center mt-20 text-sm text-gray-500 font-medium">
+          From photo to resolution — powered by Artificial Intelligence 🚀
         </div>
       </div>
     </main>
