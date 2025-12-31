@@ -6,25 +6,35 @@ load_dotenv()
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-def analyze_text(image_description):
-    model = genai.GenerativeModel("gemini-pro")
+model = genai.GenerativeModel("gemini-3-flash-preview")
 
+def analyze_text(description: str) -> str:
+    """
+    Takes vision output text
+    Returns STRICT JSON only
+    """
 
     prompt = f"""
-You are an AI civic governance assistant.
+    You are an AI system that converts civic issue descriptions
+    into structured JSON.
 
-Based on the following image analysis:
-"{image_description}"
+    DESCRIPTION:
+    {description}
 
-Return a JSON with:
-- issue_type
-- department
-- severity (Low / Medium / High)
-- summary
+    OUTPUT FORMAT (STRICT JSON ONLY):
+    {{
+      "issue_type": "string",
+      "severity": "Low | Medium | High",
+      "department": "string",
+      "summary": "short summary"
+    }}
 
-Respond ONLY in valid JSON. No extra text.
-"""
+    Rules:
+    - Do NOT add explanation
+    - Do NOT add markdown
+    - Return valid JSON only
+    """
 
     response = model.generate_content(prompt)
 
-    return response.text
+    return response.text.strip()
