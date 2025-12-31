@@ -132,10 +132,14 @@ export default function UploadBox() {
       <div className="mt-6 flex gap-3 items-center">
         <button
           onClick={onAnalyze}
-          className="bg-blue-600 text-white flex-1 py-3 rounded-lg"
+          disabled={loading}
+          className={`bg-blue-600 text-white flex-1 py-3 rounded-lg ${
+            loading ? "opacity-60 cursor-not-allowed" : "hover:bg-blue-700"
+          }`}
         >
-          Analyze with AI
+          {loading ? "Analyzing..." : "Analyze with AI"}
         </button>
+
         <div className="bg-gray-100 rounded-lg px-3 py-3 text-xs text-gray-600 text-center min-w-max">
           <div className="font-semibold">AI Ready</div>
           <div>

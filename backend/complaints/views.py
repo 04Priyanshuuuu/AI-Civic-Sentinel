@@ -5,8 +5,10 @@ import os, json
 from .models import Complaint
 from src.services.gemini_vision import analyze_image
 from src.services.gemini_text import analyze_text
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 def analyze_complaint(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required"}, status=405)
