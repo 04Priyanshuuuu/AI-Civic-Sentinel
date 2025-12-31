@@ -8,7 +8,8 @@ load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 def analyze_image(image_path):
-    model = genai.GenerativeModel("gemini-1.5-pro")
+    model = genai.GenerativeModel("gemini-pro-vision")
+
 
     image = Image.open(image_path)
 
