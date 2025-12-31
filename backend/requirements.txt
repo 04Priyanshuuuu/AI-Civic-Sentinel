@@ -1,5 +1,6 @@
 django
+django-cors-headers
 python-dotenv
-google-genai 
+google-generativeai
 requests
-
+Pillow
