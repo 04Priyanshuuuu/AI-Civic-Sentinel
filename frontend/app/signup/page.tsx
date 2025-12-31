@@ -1,12 +1,15 @@
 "use client";
 
+
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase";
 import { saveUserInfo } from "@/src/services/saveUser";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [location, setLocation] = useState("");
@@ -33,6 +36,7 @@ export default function SignupPage() {
       await saveUserInfo(uid, { name, phone, location, email });
 
       alert("Signup successful 🎉");
+      router.push("/");
     } catch (err) {
       alert(err instanceof Error ? err.message : "An error occurred");
     }

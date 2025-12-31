@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 import os, json
-
+from .models import Complaint
 from src.services.gemini_vision import analyze_image
 from src.services.gemini_text import analyze_text
 
@@ -37,9 +37,28 @@ def analyze_complaint(request):
             "raw_output": text_output
         }, status=500)
 
-    # 5️⃣ FINAL RESPONSE (frontend + judges)
+    # 5️⃣ Save to DB
+    complaint = Complaint.objects.create(
+            image=file_path,
+            issue_type=structured_data["issue_type"],
+            severity=structured_data["severity"],
+            department=structured_data["department"],
+            summary=structured_data["summary"]
+    )
+
     return JsonResponse({
         "success": True,
-        "image_path": full_path,
+        "complaint_id": complaint.id,
         "ai_result": structured_data
     })
+
+
+
+def list_reports(request):
+    data = Complaint.objects.all().order_by("-created_at").values()
+    return JsonResponse(list(data), safe=False)
+
+
+
+
+
