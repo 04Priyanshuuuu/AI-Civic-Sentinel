@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import AIResultCard from "@/components/AIResultCard";
+import { useRouter } from "next/navigation";
+import { useAnalyzeStore } from "../src/store/useAnalyzeStore";
 
 type Preview = {
   file: File;
@@ -11,9 +12,13 @@ type Preview = {
 export default function UploadBox() {
   const [previews, setPreviews] = useState<Preview[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const router = useRouter();
+
+  // 🔥 RENAMED HERE
+  const saveAnalyzeResult = useAnalyzeStore((s) => s.setResult);
 
   useEffect(() => {
     return () => {
@@ -23,16 +28,17 @@ export default function UploadBox() {
 
   function handleFiles(files: FileList | null) {
     if (!files) return;
+
     const imageFiles = Array.from(files).filter((f) =>
       f.type.startsWith("image/")
     );
+
     const newPreviews = imageFiles.map((f) => ({
       file: f,
       url: URL.createObjectURL(f),
     }));
-    setPreviews((prev) => {
-      return [...prev, ...newPreviews];
-    });
+
+    setPreviews((prev) => [...prev, ...newPreviews]);
   }
 
   function onDrop(e: React.DragEvent) {
@@ -43,16 +49,16 @@ export default function UploadBox() {
 
   function onRemove(index: number) {
     setPreviews((prev) => {
-      const next = prev.slice();
-      const [removed] = next.splice(index, 1);
-      URL.revokeObjectURL(removed.url);
+      const next = [...prev];
+      URL.revokeObjectURL(next[index].url);
+      next.splice(index, 1);
       return next;
     });
   }
 
   async function onAnalyze() {
     if (previews.length === 0) {
-      alert("Please add at least one image.");
+      alert("Please upload an image first");
       return;
     }
 
@@ -69,11 +75,18 @@ export default function UploadBox() {
     const data = await res.json();
     setLoading(false);
 
-    setResult(data);
+    if (!data.success) {
+      alert("AI analysis failed");
+      return;
+    }
+
+    // 🔥 USE RENAMED FUNCTION
+    saveAnalyzeResult(data.ai_result);
+    router.push("/result");
   }
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow">
+    <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow">
       <div
         onDragOver={(e) => {
           e.preventDefault();
@@ -81,44 +94,34 @@ export default function UploadBox() {
         }}
         onDragLeave={() => setIsDragOver(false)}
         onDrop={onDrop}
-        className={`border-2 border-dashed p-6 text-center rounded-lg transition-colors ${
+        onClick={() => inputRef.current?.click()}
+        className={`border-2 border-dashed p-6 text-center rounded-lg cursor-pointer ${
           isDragOver ? "border-blue-400 bg-blue-50" : "border-gray-200"
         }`}
-        onClick={() => inputRef.current?.click()}
-        role="button"
       >
-        <p className="mb-3 text-gray-500 font-medium font-bold">
-          {" "}
-          Tap Here To Drag & drop photos, or <br />
-          <span className="text-blue-400 cursor-pointer font-bold">Browse</span>
+        <p className="text-gray-500 font-semibold">
+          Drag & drop image or <span className="text-blue-600">Browse</span>
         </p>
-        <p className="text-sm text-gray-500">JPG, PNG — up to 10MB each</p>
         <input
           ref={inputRef}
           type="file"
           className="hidden"
           accept="image/*"
-          multiple
           onChange={(e) => handleFiles(e.target.files)}
         />
       </div>
 
       {previews.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-2 max-h-16 overflow-auto items-start">
+        <div className="mt-4 flex gap-2">
           {previews.map((p, i) => (
-            <div
-              key={p.url}
-              className="relative w-12 h-12 rounded-md overflow-hidden border flex-shrink-0"
-            >
+            <div key={p.url} className="relative w-14 h-14">
               <img
                 src={p.url}
-                alt={p.file.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded"
               />
               <button
                 onClick={() => onRemove(i)}
-                className="absolute top-1 right-1 bg-white/80 rounded-full p-1 text-sm"
-                aria-label="Remove image"
+                className="absolute top-0 right-0 bg-white text-xs rounded-full px-1"
               >
                 ✕
               </button>
@@ -127,26 +130,13 @@ export default function UploadBox() {
         </div>
       )}
 
-      {result && <AIResultCard result={result} />}
-
-      <div className="mt-6 flex gap-3 items-center">
-        <button
-          onClick={onAnalyze}
-          disabled={loading}
-          className={`bg-blue-600 text-white flex-1 py-3 rounded-lg ${
-            loading ? "opacity-60 cursor-not-allowed" : "hover:bg-blue-700"
-          }`}
-        >
-          {loading ? "Analyzing..." : "Analyze with AI"}
-        </button>
-
-        <div className="bg-gray-100 rounded-lg px-3 py-3 text-xs text-gray-600 text-center min-w-max">
-          <div className="font-semibold">AI Ready</div>
-          <div>
-            {previews.length} {previews.length === 1 ? "image" : "images"}
-          </div>
-        </div>
-      </div>
+      <button
+        onClick={onAnalyze}
+        disabled={loading}
+        className="mt-6 w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 disabled:opacity-60"
+      >
+        {loading ? "Analyzing..." : "Analyze with AI"}
+      </button>
     </div>
   );
 }
