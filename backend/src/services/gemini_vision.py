@@ -1,13 +1,11 @@
-import google.generativeai as genai
+from google import genai
 import os
 from PIL import Image
 from dotenv import load_dotenv
 
 load_dotenv()
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-
-model = genai.GenerativeModel("gemini-3-flash-preview")
+client = genai.Client()
 
 def analyze_image(image_path: str) -> str:
     """
@@ -30,6 +28,9 @@ def analyze_image(image_path: str) -> str:
     Just return a clear paragraph description.
     """
 
-    response = model.generate_content([prompt, image])
+    response = client.models.generate_content(
+        model="gemini-3-flash-preview",
+        contents=[prompt, image]
+    )
 
     return response.text.strip()

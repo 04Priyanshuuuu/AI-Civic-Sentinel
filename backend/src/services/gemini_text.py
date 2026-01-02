@@ -1,12 +1,10 @@
-import google.generativeai as genai
+from google import genai
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-
-model = genai.GenerativeModel("gemini-3-flash-preview")
+client = genai.Client()
 
 def analyze_text(description: str) -> str:
     """
@@ -35,6 +33,9 @@ def analyze_text(description: str) -> str:
     - Return valid JSON only
     """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-3-flash-preview",
+        contents=prompt
+    )
 
     return response.text.strip()
