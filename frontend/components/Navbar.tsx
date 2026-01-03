@@ -8,16 +8,43 @@ export default function Navbar() {
   const isLoginPage = pathname === "/login";
 
   return (
-    <nav className="sticky top-0 flex justify-between items-center px-8 py-4 bg-blue-100 shadow relative z-20">
-      <h1 className="text-xl font-bold text-blue-600">
+    <nav
+      className="
+        sticky top-4 z-50 mx-6
+        flex items-center justify-between
+        px-8 py-4
+        rounded-2xl
+        bg-white/20
+        backdrop-blur-xl
+        border border-white/30
+        shadow-[0_8px_30px_rgb(0,0,0,0.12)]
+      "
+    >
+      {/* LOGO / TITLE */}
+      <Link
+        href="/"
+        className="text-2xl font-extrabold tracking-tight text-blue-700 hover:text-blue-800 transition"
+      >
         AI Civic Sentinel
-      </h1>
+      </Link>
 
-      <div className="flex items-center gap-3">
+      {/* RIGHT ACTIONS */}
+      <div className="flex items-center gap-4">
+        {/* Dashboard Icon */}
         <Link
           href="/dashboard"
-          className="inline-flex items-center justify-center w-10 h-10 rounded-lg hover:bg-blue-200 text-blue-600"
-          aria-label="Profile"
+          className="
+            flex items-center justify-center
+            w-11 h-11
+            rounded-xl
+            bg-white/40
+            backdrop-blur-md
+            text-blue-700
+            hover:bg-blue-600 hover:text-white
+            transition-all duration-300
+            shadow-md
+          "
+          aria-label="Dashboard"
           title="Dashboard"
         >
           <svg
@@ -30,10 +57,19 @@ export default function Navbar() {
           </svg>
         </Link>
 
+        {/* Login Button */}
         {!isLoginPage && (
           <Link
             href="/login"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            className="
+              px-5 py-2.5
+              rounded-xl
+              bg-gradient-to-r from-blue-600 to-indigo-600
+              text-white font-semibold
+              hover:scale-105
+              hover:shadow-xl
+              transition-all duration-300
+            "
           >
             Login
           </Link>

@@ -6,33 +6,35 @@ export default function LocationSection() {
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
 
   function useMyLocation() {
-    if (!navigator.geolocation) {
-      alert("Geolocation is not supported in your browser.");
-      return;
-    }
     navigator.geolocation.getCurrentPosition(
-      (pos) => setCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-      (err) => alert("Could not get location: " + err.message)
+      (pos) =>
+        setCoords({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        }),
+      () => alert("Location permission denied")
     );
   }
 
   return (
-    <section  className="mb-4 h-62 mx-2 p-6 bg-white rounded-xl shadow ">
-      <h3 className="text-2xl font-bold text-blue-600 mb-4">Report Location</h3>
-      <div className="flex items-center gap-3 mb-4">
+    <section className="w-full bg-white/30 backdrop-blur-xl border border-white/40 rounded-2xl p-5 shadow-xl">
+      <h3 className="text-lg font-bold text-blue-700 mb-3">📍 Report Location</h3>
+
+      <div className="flex items-center gap-3">
         <button
-          type="button"
           onClick={useMyLocation}
-          className="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700"
+          className="px-4 py-2 rounded-xl text-sm font-semibold text-white
+          bg-gradient-to-r from-blue-600 to-indigo-600 hover:shadow-lg transition"
         >
           Use my location
         </button>
-        <div className="text-sm text-gray-600">
-          {coords ? `Lat ${coords.lat.toFixed(4)}, Lng ${coords.lng.toFixed(4)}` : "Location (optional)"}
-        </div>
-      </div>
 
-     
+        <span className="text-sm text-gray-700">
+          {coords
+            ? `Lat ${coords.lat.toFixed(3)}, Lng ${coords.lng.toFixed(3)}`
+            : "Optional"}
+        </span>
+      </div>
     </section>
   );
 }

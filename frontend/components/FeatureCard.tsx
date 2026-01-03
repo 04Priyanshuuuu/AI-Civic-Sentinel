@@ -6,9 +6,9 @@ export default function FeatureCard({
   desc: string;
 }) {
   return (
-    <div className="bg-blue-100 bg-opacity-10 p-7 rounded-xl shadow backdrop-blur-sm">
-      <h3 className="text-lg font-semibold mb-2 text-blue-500">{title}</h3>
-      <p className="text-gray-600">{desc}</p>
+    <div className="bg-white/30 backdrop-blur-xl border border-white/40 rounded-2xl p-7 shadow-xl hover:scale-[1.03] transition">
+      <h3 className="text-lg font-bold text-blue-700 mb-2">{title}</h3>
+      <p className="text-gray-700">{desc}</p>
     </div>
   );
 }

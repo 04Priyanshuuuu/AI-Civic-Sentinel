@@ -5,46 +5,40 @@ import LocationSection from "@/components/LocationSection";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/home.png')" }}
-      />
-
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-100/90 via-white/80 to-white" />
-
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
-        {/* HERO */}
+    <main className="relative min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      <div className="max-w-7xl mx-auto px-6 pt-24 pb-32">
         <section className="grid md:grid-cols-2 gap-16 items-center">
+          
           {/* LEFT */}
           <div>
-            <span className="inline-block mb-4 px-4 py-1 text-sm font-semibold text-blue-700 bg-blue-100 rounded-full">
+            <span className="inline-flex items-center gap-2 mb-5 px-4 py-1.5
+              text-sm font-semibold text-blue-700 bg-blue-100 rounded-full">
               AI Civic Sentinel
             </span>
 
-            <h1 className="text-5xl leading-tight font-extrabold text-blue-700 mb-6">
-              Report Civic Issues <br /> with AI Precision
+            <h1 className="text-5xl font-extrabold leading-tight text-slate-900">
+              AI-Powered <br />
+              Civic Issue Reporting
             </h1>
 
-            <p className="text-lg text-gray-700 mb-8 max-w-md">
-              Upload a photo of civic issues like potholes, garbage or broken roads.
-              Our AI automatically analyzes, categorizes and tracks them.
+            <p className="mt-6 text-lg text-slate-600 max-w-md">
+              Upload a photo, let AI detect the issue, severity and department —
+              from potholes to garbage.
             </p>
 
-            <div className="flex gap-4">
+            <div className="mt-8 flex gap-4">
               <Link
-                href="/dashboard"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg transition"
+                href="/report"
+                className="px-8 py-3 rounded-xl font-semibold text-white
+                bg-blue-600 hover:bg-blue-700 shadow-lg transition"
               >
-                Get Started
+                Report an Issue
               </Link>
 
               <Link
                 href="/reports"
-                className="border border-blue-600 text-blue-600 px-8 py-3 rounded-xl font-semibold hover:bg-blue-50 transition"
+                className="px-8 py-3 rounded-xl font-semibold text-blue-600
+                border border-blue-200 hover:bg-blue-50 transition"
               >
                 View Reports
               </Link>
@@ -53,42 +47,22 @@ export default function Home() {
 
           {/* RIGHT */}
           <div className="relative">
-            <div className="backdrop-blur-xl bg-white/70 rounded-3xl shadow-2xl p-6">
+            <div className="bg-white/80 backdrop-blur-xl
+              border border-white/60
+              rounded-3xl shadow-2xl p-8">
               <UploadBox />
             </div>
 
-            <div className="mt-4 flex justify-center">
+            <div className="mt-6">
               <LocationSection />
             </div>
           </div>
         </section>
 
-        {/* STEPS */}
-        <section className="mt-24">
-          <h2 className="text-4xl font-bold text-center text-blue-700 mb-12">
-            How It Works
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <FeatureCard
-              title="1. Capture & Upload"
-              desc="Click a photo of the civic issue using your phone"
-            />
-            <FeatureCard
-              title="2. AI Analysis"
-              desc="AI detects problem type, severity & location"
-            />
-            <FeatureCard
-              title="3. Track Resolution"
-              desc="Monitor real-time status & authority updates"
-            />
-          </div>
-        </section>
-
         {/* FOOTER LINE */}
-        <div className="text-center mt-20 text-sm text-gray-500 font-medium">
-          From photo to resolution — powered by Artificial Intelligence 🚀
-        </div>
+        <p className="text-center mt-24 text-sm text-slate-500">
+          From a photo to resolution — powered by AI 🚀
+        </p>
       </div>
     </main>
   );
