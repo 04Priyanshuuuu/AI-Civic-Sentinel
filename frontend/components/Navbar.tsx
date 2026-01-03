@@ -10,7 +10,8 @@ export default function Navbar() {
   return (
     <nav
       className="
-        sticky top-4 z-50 mx-6
+        sticky top-0 z-50 mx-6 mt-4
+
         flex items-center justify-between
         px-8 py-4
         rounded-2xl

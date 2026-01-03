@@ -12,8 +12,16 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html,
 body {
-  background: #ffffff; /* force white */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  background: transparent;
   color: #171717;
   font-family: Arial, Helvetica, sans-serif;
 }
+

@@ -15,8 +15,6 @@ export default function LoginPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Login successful 🎉");
-
-      // ✅ redirect to home
       router.push("/");
     } catch (err) {
       alert(err instanceof Error ? err.message : "An error occurred");
@@ -24,22 +22,24 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-100 flex items-center justify-center px-8">
-      <div className="w-full max-w-xl bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-blue-500">
-        
+    <main className="min-h-screen flex items-center justify-center px-6 bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300">
+      
+      {/* Glass Card */}
+      <div className="w-full max-w-xl backdrop-blur-xl bg-white/40 border border-white/30 rounded-3xl shadow-2xl overflow-hidden">
+
         {/* Header */}
-        <div className="flex items-center justify-between px-8 py-5 border-b border-blue-500">
+        <div className="flex items-center justify-between px-8 py-5 border-b border-white/30 bg-white/30">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
+            <div className="w-11 h-11 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md">
               AI
             </div>
-            <span className="font-bold text-black text-lg">
+            <span className="font-bold text-gray-900 text-lg">
               AI Civic Sentinel
             </span>
           </div>
 
           <Link href="/signup">
-            <button className="text-sm px-4 py-2 border rounded-md text-black hover:bg-blue-100">
+            <button className="text-sm px-4 py-2 rounded-lg border border-white/40 bg-white/30 text-gray-900 hover:bg-white/50 transition">
               Signup
             </button>
           </Link>
@@ -47,8 +47,8 @@ export default function LoginPage() {
 
         {/* Content */}
         <div className="p-8 space-y-6">
-          <h2 className="text-2xl font-bold text-black text-center">
-            Welcome Back
+          <h2 className="text-3xl font-bold text-gray-900 text-center">
+            Welcome Back 👋
           </h2>
 
           <div className="space-y-4">
@@ -56,27 +56,27 @@ export default function LoginPage() {
               type="email"
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border-2 border-blue-500 p-3 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-4 py-3 rounded-xl bg-white/60 border border-white/40 text-gray-900 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 backdrop-blur-md"
             />
 
             <input
               type="password"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border-2 border-blue-500 p-3 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-4 py-3 rounded-xl bg-white/60 border border-white/40 text-gray-900 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 backdrop-blur-md"
             />
           </div>
 
           <button
             onClick={handleLogin}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
+            className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg shadow-lg transition"
           >
             Login
           </button>
 
-          <p className="text-center text-black">
+          <p className="text-center text-gray-800">
             Don’t have an account?{" "}
-            <Link href="/signup" className="text-blue-600 font-semibold">
+            <Link href="/signup" className="text-blue-600 font-semibold hover:underline">
               Signup
             </Link>
           </p>

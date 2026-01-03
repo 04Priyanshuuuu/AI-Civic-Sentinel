@@ -51,7 +51,13 @@ export default function UploadBox() {
 
     if (!data.success) return alert("AI analysis failed");
 
-    saveAnalyzeResult(data.ai_result);
+    saveAnalyzeResult({
+      issue_type: data.ai_result.issue_type,
+      severity: data.ai_result.severity,
+      department: data.ai_result.department,
+      summary: data.ai_result.summary,
+    });
+
     router.push("/result");
   }
 

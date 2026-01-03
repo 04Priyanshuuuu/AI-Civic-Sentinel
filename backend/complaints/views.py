@@ -23,6 +23,7 @@ def analyze_complaint(request):
         return JsonResponse({"success": False, "error": "Image required"}, status=400)
 
     try:
+        # save temp image
         temp_path = default_storage.save(
             f"temp/{image.name}",
             ContentFile(image.read())
@@ -32,12 +33,16 @@ def analyze_complaint(request):
 
         vision_output = analyze_image(full_path)
         text_output = analyze_text(vision_output)
-
         structured_data = json.loads(text_output)
+
+        image_url = request.build_absolute_uri(
+            settings.MEDIA_URL + temp_path
+        )
 
         return JsonResponse({
             "success": True,
-            "ai_result": structured_data
+            "ai_result": structured_data,
+            "image_url": image_url   # 👈🔥 THIS WAS MISSING
         })
 
     except Exception as e:
@@ -54,13 +59,14 @@ def create_complaint(request):
         return JsonResponse({"success": False, "error": "POST required"}, status=405)
 
     try:
-        data = json.loads(request.body)
+        image = request.FILES.get("image")
 
         complaint = Complaint.objects.create(
-            issue_type=data.get("issue_type"),
-            severity=data.get("severity"),
-            department=data.get("department"),
-            summary=data.get("summary"),
+            image=image,   # 👈🔥 THIS
+            issue_type=request.POST.get("issue_type"),
+            severity=request.POST.get("severity"),
+            department=request.POST.get("department"),
+            summary=request.POST.get("summary"),
             status="Pending"
         )
 
@@ -72,6 +78,7 @@ def create_complaint(request):
     except Exception as e:
         traceback.print_exc()
         return JsonResponse({"success": False, "error": str(e)}, status=500)
+
 
 
 # =========================
