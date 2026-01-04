@@ -50,7 +50,7 @@ export default function Home() {
             </Link>
 
             <Link
-              href="/reports"
+              href="/complaints"
               className="px-8 py-3 rounded-xl border border-blue-200 text-blue-600 font-semibold hover:bg-blue-50 transition"
             >
               View Reports

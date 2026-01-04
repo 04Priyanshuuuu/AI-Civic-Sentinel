@@ -5,6 +5,9 @@ import Footer from "@/components/Footer";
 export const metadata = {
   title: "AI Civic Sentinel",
   description: "AI-powered civic issue reporting",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

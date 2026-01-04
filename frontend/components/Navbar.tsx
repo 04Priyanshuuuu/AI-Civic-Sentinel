@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -11,7 +12,6 @@ export default function Navbar() {
     <nav
       className="
         sticky top-0 z-50 mx-6 mt-4
-
         flex items-center justify-between
         px-8 py-4
         rounded-2xl
@@ -21,12 +21,22 @@ export default function Navbar() {
         shadow-[0_8px_30px_rgb(0,0,0,0.12)]
       "
     >
-      {/* LOGO / TITLE */}
-      <Link
-        href="/"
-        className="text-2xl font-extrabold tracking-tight text-blue-700 hover:text-blue-800 transition"
-      >
-        AI Civic Sentinel
+      {/* LOGO AREA */}
+      <Link href="/" className="flex items-center gap-3 group">
+        <div className="w-14 h-14 flex items-center justify-center">
+          <Image
+            src="/images/logo.svg"
+            alt="AI Civic Sentinel Logo"
+            width={48}
+            height={48}
+            className="w-12 h-12 object-contain scale-400"
+            priority
+          />
+        </div>
+
+        <span className="text-2xl font-extrabold tracking-tight text-blue-700 group-hover:text-blue-800 transition">
+          AI Civic Sentinel
+        </span>
       </Link>
 
       {/* RIGHT ACTIONS */}

@@ -1,11 +1,12 @@
-from google import genai
+from google.genai import Client
+
 import os
 from PIL import Image
 from dotenv import load_dotenv
 
 load_dotenv()
 
-client = genai.Client()
+client = Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 def analyze_image(image_path: str) -> str:
     """
