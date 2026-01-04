@@ -60,13 +60,15 @@ def create_complaint(request):
 
     try:
         image = request.FILES.get("image")
+        location = request.POST.get("location")  # 👈 NEW
 
         complaint = Complaint.objects.create(
-            image=image,   # 👈🔥 THIS
+            image=image,
             issue_type=request.POST.get("issue_type"),
             severity=request.POST.get("severity"),
             department=request.POST.get("department"),
             summary=request.POST.get("summary"),
+            location=location,  # 👈 SAVE
             status="Pending"
         )
 
@@ -78,6 +80,7 @@ def create_complaint(request):
     except Exception as e:
         traceback.print_exc()
         return JsonResponse({"success": False, "error": str(e)}, status=500)
+
 
 
 
@@ -94,10 +97,13 @@ def list_reports(request):
         "department": r.department,
         "summary": r.summary,
         "status": r.status,
+        "location": r.location,  # 👈 ADD
         "created_at": r.created_at.isoformat(),
+        "image": r.image.url if r.image else None,
     } for r in reports]
 
     return JsonResponse({"success": True, "reports": data})
+
 
 
 # =========================

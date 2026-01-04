@@ -1,5 +1,6 @@
 import "./globals.css";
 import Navbar from "../components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "AI Civic Sentinel",
@@ -16,6 +17,7 @@ export default function RootLayout({
       <body className="bg-gray-50 text-gray-900">
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

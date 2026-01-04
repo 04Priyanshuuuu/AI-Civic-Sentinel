@@ -24,9 +24,11 @@ export default function UploadBox() {
 
   function handleFiles(files: FileList | null) {
     if (!files) return;
+
     const imageFiles = Array.from(files).filter((f) =>
       f.type.startsWith("image/")
     );
+
     setPreviews((prev) => [
       ...prev,
       ...imageFiles.map((f) => ({
@@ -37,28 +39,48 @@ export default function UploadBox() {
   }
 
   async function onAnalyze() {
-    if (!previews.length) return alert("Upload image first");
+    if (!previews.length) {
+      alert("Upload image first");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("image", previews[0].file);
 
     setLoading(true);
-    const res = await fetch("http://127.0.0.1:8000/api/analyze/", {
-      method: "POST",
-      body: formData,
-    });
-    const data = await res.json();
-    setLoading(false);
 
-    if (!data.success) return alert("AI analysis failed");
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/analyze/", {
+        method: "POST",
+        body: formData,
+      });
 
-    saveAnalyzeResult({
-      issue_type: data.ai_result.issue_type,
-      severity: data.ai_result.severity,
-      department: data.ai_result.department,
-      summary: data.ai_result.summary,
-    });
+      const data = await res.json();
 
-    router.push("/result");
+      if (!data.success) {
+        alert("AI analysis failed");
+        return;
+      }
+
+      // 🔥 FIX: TEXT + IMAGE FILE DONO STORE
+      saveAnalyzeResult(
+        {
+          issue_type: data.ai_result.issue_type,
+          severity: data.ai_result.severity,
+          department: data.ai_result.department,
+          summary: data.ai_result.summary,
+          image_url: data.image_url, // refresh safe
+        },
+        previews[0].file // 🔥 ORIGINAL FILE
+      );
+
+      router.push("/result");
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -85,7 +107,9 @@ export default function UploadBox() {
         <p className="font-semibold text-blue-700">
           Drag & Drop image or <span className="underline">Browse</span>
         </p>
-        <p className="text-xs text-gray-600 mt-1">AI will analyze the issue</p>
+        <p className="text-xs text-gray-600 mt-1">
+          AI will analyze the issue
+        </p>
 
         <input
           ref={inputRef}
@@ -103,10 +127,13 @@ export default function UploadBox() {
               <img
                 src={p.url}
                 className="w-full h-full object-cover rounded-xl"
+                alt="preview"
               />
               <button
                 onClick={() =>
-                  setPreviews((prev) => prev.filter((_, idx) => idx !== i))
+                  setPreviews((prev) =>
+                    prev.filter((_, idx) => idx !== i)
+                  )
                 }
                 className="absolute -top-2 -right-2 bg-white rounded-full px-2 text-xs shadow"
               >
@@ -121,7 +148,7 @@ export default function UploadBox() {
         onClick={onAnalyze}
         disabled={loading}
         className="mt-6 w-full py-3 rounded-xl font-semibold text-white
-        bg-gradient-to-r from-blue-600 to-indigo-600
+        bg-gradient-to-r from-blue-600 to-indigo-600 hover:cursor-pointer
         hover:scale-[1.02] transition shadow-lg disabled:opacity-60"
       >
         {loading ? "Analyzing…" : "Analyze with AI"}

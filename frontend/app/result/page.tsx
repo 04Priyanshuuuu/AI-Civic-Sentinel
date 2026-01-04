@@ -7,6 +7,7 @@ import AIResultCard from "@/components/AIResultCard";
 export default function ResultPage() {
   const result = useAnalyzeStore((s) => s.result);
   const clear = useAnalyzeStore((s) => s.clear);
+  const imageFile = useAnalyzeStore((s) => s.imageFile);
   const router = useRouter();
 
   if (!result) {
@@ -31,8 +32,9 @@ export default function ResultPage() {
   }
 
   return (
-    <main className="max-w-2xl mx-auto p-10">
-      <AIResultCard result={result} />
+    <main className="max-w-6xl mx-auto px-6 py-10">
+
+      <AIResultCard result={result} imageFile={imageFile} />
     </main>
   );
 }

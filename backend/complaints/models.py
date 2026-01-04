@@ -6,8 +6,16 @@ class Complaint(models.Model):
     severity = models.CharField(max_length=20)
     department = models.CharField(max_length=100)
     summary = models.TextField()
+
+    location = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
     status = models.CharField(max_length=30, default="Pending")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.issue_type
+

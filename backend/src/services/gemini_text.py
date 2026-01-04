@@ -24,7 +24,7 @@ def analyze_text(description: str) -> str:
       "issue_type": "string",
       "severity": "Low | Medium | High",
       "department": "string",
-      "summary": "short summary"
+      "summary": "short summary in 50 words"
     }}
 
     Rules:
