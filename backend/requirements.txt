@@ -1,6 +1,11 @@
-django
-django-cors-headers
-python-dotenv
 google-generativeai
 requests
 Pillow
+Django==6.0
+gunicorn
+django-cors-headers
+whitenoise
+python-dotenv
+cloudinary
+django-cloudinary-storage
+dj-database-url
