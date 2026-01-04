@@ -17,6 +17,8 @@ import {
   SiDjango,
   SiGoogle,
   SiLeaflet,
+  SiVercel,
+  SiRender,
 } from "react-icons/si";
 
 export default function TechStack() {
@@ -34,20 +36,24 @@ export default function TechStack() {
     { name: "Gemini Text AI", icon: <SiGoogle />, color: "text-indigo-500" },
     { name: "Gemini Vision AI", icon: <SiGoogle />, color: "text-purple-500" },
     { name: "Leaflet.js (Maps)", icon: <SiLeaflet />, color: "text-green-500" },
+
+    // ✅ Newly Added
+    { name: "Vercel (Frontend Hosting)", icon: <SiVercel />, color: "text-black" },
+    { name: "Render (Backend Hosting)", icon: <SiRender />, color: "text-indigo-600" },
   ];
 
   return (
     <section className="relative py-32 bg-gradient-to-b from-white via-blue-50 to-white overflow-hidden">
-
+      
       {/* Background blur blobs */}
       <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-200 rounded-full blur-3xl opacity-30" />
       <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-200 rounded-full blur-3xl opacity-30" />
 
       <div className="relative max-w-7xl mx-auto px-6 text-center">
-
+        
         {/* Heading */}
         <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">
-          Tech Stack(13)
+          Tech Stack (15)
         </h2>
 
         <p className="text-slate-600 max-w-3xl mx-auto mb-16 text-lg">
@@ -72,14 +78,13 @@ export default function TechStack() {
                 transition-all duration-300
               "
             >
-              {/* glow border on hover */}
               <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-blue-400/50 transition" />
 
               <div className={`text-4xl mb-3 ${item.color}`}>
                 {item.icon}
               </div>
 
-              <span className="text-sm font-semibold text-slate-800">
+              <span className="text-sm font-semibold text-slate-800 text-center">
                 {item.name}
               </span>
             </div>
