@@ -2,12 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {
-  LayoutDashboard,
-  FileText,
-  Settings,
-  Search,
-} from "lucide-react";
+import { LayoutDashboard, FileText, Settings, Search } from "lucide-react";
 
 type Issue = {
   id: number;
@@ -26,7 +21,9 @@ function SeverityBadge({ level }: { level: string }) {
   if (level?.toUpperCase() === "HIGH")
     return <span className={`${base} bg-red-100 text-red-700`}>HIGH</span>;
   if (level?.toUpperCase() === "MEDIUM")
-    return <span className={`${base} bg-yellow-100 text-yellow-700`}>MEDIUM</span>;
+    return (
+      <span className={`${base} bg-yellow-100 text-yellow-700`}>MEDIUM</span>
+    );
   return <span className={`${base} bg-green-100 text-green-700`}>LOW</span>;
 }
 
@@ -36,7 +33,7 @@ export default function Dashboard() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/reports/")
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/reports/`)
       .then((res) => res.json())
       .then((data) => {
         setIssues(data.reports || []);
@@ -59,7 +56,6 @@ export default function Dashboard() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       <div className="flex max-w-[1400px] mx-auto px-6 py-8 gap-8">
-
         {/* SIDEBAR */}
         <aside className="w-64">
           <div className="rounded-2xl bg-white/70 backdrop-blur-xl border border-white shadow-xl p-5">
@@ -104,7 +100,10 @@ export default function Dashboard() {
             </h1>
 
             <div className="relative">
-              <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
+              <Search
+                className="absolute left-3 top-2.5 text-gray-400"
+                size={18}
+              />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -138,7 +137,10 @@ export default function Dashboard() {
                       <div className="col-span-4 flex items-center gap-4">
                         <div className="w-14 h-14 rounded-xl bg-gray-200 overflow-hidden shrink-0">
                           {it.image ? (
-                            <img src={it.image} className="w-full h-full object-cover" />
+                            <img
+                              src={it.image}
+                              className="w-full h-full object-cover"
+                            />
                           ) : (
                             <div className="flex items-center justify-center h-full text-xs text-gray-400">
                               No Image
@@ -149,9 +151,7 @@ export default function Dashboard() {
                           <p className="font-semibold text-slate-900">
                             {it.issue_type}
                           </p>
-                          <p className="text-sm text-gray-500">
-                            {it.summary}
-                          </p>
+                          <p className="text-sm text-gray-500">{it.summary}</p>
                           <p className="text-xs text-gray-400 mt-1">
                             📍 {it.location || "Location not provided"}
                           </p>

@@ -19,7 +19,9 @@ function SeverityBadge({ level }: { level: string }) {
   if (level?.toUpperCase() === "HIGH")
     return <span className={`${base} bg-red-100 text-red-700`}>HIGH</span>;
   if (level?.toUpperCase() === "MEDIUM")
-    return <span className={`${base} bg-yellow-100 text-yellow-700`}>MEDIUM</span>;
+    return (
+      <span className={`${base} bg-yellow-100 text-yellow-700`}>MEDIUM</span>
+    );
   return <span className={`${base} bg-green-100 text-green-700`}>LOW</span>;
 }
 
@@ -29,7 +31,7 @@ export default function ReportsPage() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/reports/")
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/reports/`)
       .then((res) => res.json())
       .then((data) => {
         setReports(data.reports || []);
@@ -53,7 +55,6 @@ export default function ReportsPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white px-6 py-12">
       <div className="max-w-5xl mx-auto">
-
         {/* HEADER */}
         <div className="flex justify-between items-center mb-10">
           <div>
@@ -82,9 +83,7 @@ export default function ReportsPage() {
         {!loading &&
           Object.entries(grouped).map(([dept, items]: any) => (
             <div key={dept} className="mb-10">
-              <h2 className="text-xl font-bold mb-4 text-slate-800">
-                {dept}
-              </h2>
+              <h2 className="text-xl font-bold mb-4 text-slate-800">{dept}</h2>
 
               <div className="space-y-6">
                 {items.map((r: Report) => (
@@ -95,7 +94,10 @@ export default function ReportsPage() {
                     <div className="flex gap-4">
                       <div className="w-16 h-16 rounded-xl bg-gray-200 overflow-hidden shrink-0">
                         {r.image ? (
-                          <img src={r.image} className="w-full h-full object-cover" />
+                          <img
+                            src={r.image}
+                            className="w-full h-full object-cover"
+                          />
                         ) : (
                           <div className="flex items-center justify-center h-full text-xs text-gray-400">
                             No Image
@@ -120,9 +122,7 @@ export default function ReportsPage() {
                           </span>
                         </div>
 
-                        <p className="text-gray-700 mt-3">
-                          {r.summary}
-                        </p>
+                        <p className="text-gray-700 mt-3">{r.summary}</p>
 
                         <p className="text-xs text-gray-400 mt-2">
                           📍 {r.location || "Location not provided"}

@@ -50,10 +50,13 @@ export default function UploadBox() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/analyze/", {
-        method: "POST",
-        body: formData,
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/analyze/`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       const data = await res.json();
 
@@ -107,9 +110,7 @@ export default function UploadBox() {
         <p className="font-semibold text-blue-700">
           Drag & Drop image or <span className="underline">Browse</span>
         </p>
-        <p className="text-xs text-gray-600 mt-1">
-          AI will analyze the issue
-        </p>
+        <p className="text-xs text-gray-600 mt-1">AI will analyze the issue</p>
 
         <input
           ref={inputRef}
@@ -131,9 +132,7 @@ export default function UploadBox() {
               />
               <button
                 onClick={() =>
-                  setPreviews((prev) =>
-                    prev.filter((_, idx) => idx !== i)
-                  )
+                  setPreviews((prev) => prev.filter((_, idx) => idx !== i))
                 }
                 className="absolute -top-2 -right-2 bg-white rounded-full px-2 text-xs shadow"
               >

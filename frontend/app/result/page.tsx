@@ -21,7 +21,7 @@ export default function ResultPage() {
   }
 
   async function submitComplaint() {
-    await fetch("http://127.0.0.1:8000/api/reports/", {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/reports/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(result),
@@ -33,7 +33,6 @@ export default function ResultPage() {
 
   return (
     <main className="max-w-6xl mx-auto px-6 py-10">
-
       <AIResultCard result={result} imageFile={imageFile} />
     </main>
   );

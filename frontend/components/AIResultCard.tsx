@@ -49,10 +49,13 @@ export default function AIResultCard({ result, imageFile }: Props) {
 
       formData.append("summary", result.summary);
 
-      const res = await fetch("http://127.0.0.1:8000/api/complaints/", {
-        method: "POST",
-        body: formData,
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/complaints/`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (!res.ok) throw new Error("Submit failed");
       router.push("/complaints");
@@ -98,9 +101,10 @@ export default function AIResultCard({ result, imageFile }: Props) {
               <b>Department:</b> {result.department}
             </p>
 
-              {location && (
+            {location && (
               <p className="text-sm text-gray-600">
-                📍<b>Location:</b> {location.lat.toFixed(4)}, {location.lng.toFixed(4)}
+                📍<b>Location:</b> {location.lat.toFixed(4)},{" "}
+                {location.lng.toFixed(4)}
               </p>
             )}
 
