@@ -50,7 +50,7 @@ export default function Footer() {
                   href="mailto:codevengers4@gmail.com"
                   className="hover:text-blue-600 transition"
                 >
-                  codevengers4@gmail.com
+                  04priyanshuuuu@gmail.com
                 </a>
               </li>
               <li>
