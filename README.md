@@ -67,7 +67,6 @@ Database & Media Storage
 - **Django REST Framework**
 - **Python**
 - **Google Generative AI (Gemini)**
-- **Cloudinary (Image Storage)**
 - **Render (Deployment)**
 
 ---
