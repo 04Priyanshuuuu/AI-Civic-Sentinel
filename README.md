@@ -88,7 +88,7 @@ https://ai-civic-sentinel-backend.onrender.com/
 ## ⚙️ Local Development Setup
 
 ### 1️⃣ Clone Repository
-```bash
+
 git clone https://github.com/your-username/AI-Civic-Sentinel.git
 cd AI-Civic-Sentinel```
 
